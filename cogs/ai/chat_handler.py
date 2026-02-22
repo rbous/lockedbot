@@ -49,10 +49,10 @@ _TOOL_LABELS = {
     'get_db_schema':        ('<a:wirdDatabase:1474972810601304155>',     'Fetching database schema',             'Fetched database schema', '<:wirdDatabase_ok:1474555104303644837>', '<:wirdDatabase_err:1474555110507020560>'),
     'search_codebase':      ('<a:wirdLookup:1474972784529510550>', 'Searching codebase for **{query}**', 'Searched codebase for **{query}**', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     'read_file':            ('<a:wirdFolder:1474972823356313672>', 'Reading `{filename}`',               'Read `{filename}`', '<:wirdFolder_ok:1474555141586813090>', '<:wirdFolder_err:1474555148087857336>'),
-    'update_server_config': ('<a:wirdEdit:1474972803953332266>',   'Updating `{setting}` → `{value}`', 'Updated `{setting}` → `{value}`', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'update_server_config': ('<a:wirdEdit:1474973130178035833>',   'Updating `{setting}` → `{value}`', 'Updated `{setting}` → `{value}`', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     # User
     'get_my_stats':         ('<a:wirdLookup:1474972784529510550>', 'Fetching your stats',                  'Fetched your stats', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'set_my_streak_emoji':  ('<a:wirdEdit:1474972803953332266>',   'Setting streak emoji to {emoji}',    'Set streak emoji to {emoji}', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'set_my_streak_emoji':  ('<a:wirdEdit:1474973130178035833>',   'Setting streak emoji to {emoji}',    'Set streak emoji to {emoji}', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     # Discord info
     'get_server_info':      ('<a:wirdLookup:1474972784529510550>', 'Fetching server info',                 'Fetched server info', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     'get_member_info':      ('<a:wirdLookup:1474972784529510550>', 'Fetching member info',                 'Fetched member info', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
@@ -61,7 +61,7 @@ _TOOL_LABELS = {
     'get_channels':         ('<a:wirdLookup:1474972784529510550>', 'Listing channels',                     'Listed channels', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     'check_permissions':    ('<a:wirdLookup:1474972784529510550>', 'Checking permissions',                 'Checked permissions', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     # Discord actions
-    'execute_discord_code': ('<a:wirdEdit:1474972803953332266>',   'Preparing code execution',             'Code execution prepared', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'execute_discord_code': ('<a:wirdEdit:1474973130178035833>',   'Preparing code execution',             'Code execution prepared', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     # User space / files
     'save_to_space':        ('<a:wirdFolder:1474972823356313672>', 'Saving `{filename}` to your space',   'Saved `{filename}` to your space', '<:wirdFolder_ok:1474555141586813090>', '<:wirdFolder_err:1474555148087857336>'),
     'read_from_space':      ('<a:wirdFolder:1474972823356313672>', 'Reading `{filename}` from your space','Read `{filename}` from your space', '<:wirdFolder_ok:1474555141586813090>', '<:wirdFolder_err:1474555148087857336>'),
@@ -76,14 +76,14 @@ _TOOL_LABELS = {
     'extract_pdf_images':   ('<a:wirdImage:1474972816473591829>',    'Extracting PDF images from `{filename}`', 'Extracted PDF images from `{filename}`', '<:wirdImage_ok:1474555122544541801>', '<:wirdImage_err:1474555128999841792>'),
     'analyze_image':        ('<a:wirdImage:1474972816473591829>',    'Analyzing image',                       'Analyzed image', '<:wirdImage_ok:1474555122544541801>', '<:wirdImage_err:1474555128999841792>'),
     # Bot management
-    'force_bot_status':     ('<a:wirdEdit:1474972803953332266>',   'Setting bot status to **{status}**',  'Set bot status to **{status}**', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
-    'add_bot_status_option':('<a:wirdEdit:1474972803953332266>',   'Adding status option',                  'Added status option', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'force_bot_status':     ('<a:wirdEdit:1474973130178035833>',   'Setting bot status to **{status}**',  'Set bot status to **{status}**', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'add_bot_status_option':('<a:wirdEdit:1474973130178035833>',   'Adding status option',                  'Added status option', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     # Campaign  (announce icons will be added later)
-    'create_campaign_tool': ('<a:wirdEdit:1474972803953332266>',   'Creating campaign',                     'Created campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
-    'send_campaign':        ('<a:wirdEdit:1474972803953332266>',   'Sending campaign',                      'Sent campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'create_campaign_tool': ('<a:wirdEdit:1474973130178035833>',   'Creating campaign',                     'Created campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'send_campaign':        ('<a:wirdEdit:1474973130178035833>',   'Sending campaign',                      'Sent campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     'list_campaigns':       ('<a:wirdLookup:1474972784529510550>', 'Listing campaigns',                     'Listed campaigns', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     'get_campaign_responses':('<a:wirdLookup:1474972784529510550>','Fetching campaign responses',            'Fetched campaign responses', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'add_campaign_button':  ('<a:wirdEdit:1474972803953332266>',   'Adding campaign button',                'Added campaign button', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'add_campaign_button':  ('<a:wirdEdit:1474973130178035833>',   'Adding campaign button',                'Added campaign button', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     # CloudConvert
     'convert_file':         ('<a:wirdFolder:1474972823356313672>', 'Converting file',                       'Converted file', '<:wirdFolder_ok:1474555141586813090>', '<:wirdFolder_err:1474555148087857336>'),
     'check_cloudconvert_status': ('<a:wirdLookup:1474972784529510550>', 'Checking conversion status',       'Checked conversion status', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
@@ -94,6 +94,7 @@ _TOOL_LABELS = {
     # Sandbox
     'run_python_script':    ('<a:wirdPython:1474972796936523879>', 'Running Python script',                 'Ran Python script', '<:wirdPython_ok:1474555066768687144>', '<:wirdPython_err:1474555073379045466>'),
 }
+
 
 def _get_tool_emojis(fname: str) -> tuple[str, str, str]:
     """
