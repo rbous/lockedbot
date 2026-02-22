@@ -62,5 +62,13 @@
     "anim_str": "<a:wirdFolder:1474555135031115891>",
     "ok_str": "<:wirdFolder_ok:1474555141586813090>",
     "err_str": "<:wirdFolder_err:1474555148087857336>"
+  },
+  "Announce": {
+    "anim_id": "1474968852520632390",
+    "ok_id": "1474968858715754497",
+    "err_id": "1474968865027915958",
+    "anim_str": "<a:wirdAnnounce:1474968852520632390>",
+    "ok_str": "<:wirdAnnounce_ok:1474968858715754497>",
+    "err_str": "<:wirdAnnounce_err:1474968865027915958>"
   }
 }

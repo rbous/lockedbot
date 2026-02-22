@@ -78,12 +78,12 @@ _TOOL_LABELS = {
     # Bot management
     'force_bot_status':     ('<a:wirdEdit:1474555079947325440>',   'Setting bot status to **{status}**',  'Set bot status to **{status}**', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     'add_bot_status_option':('<a:wirdEdit:1474555079947325440>',   'Adding status option',                  'Added status option', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
-    # Campaign  (announce icons will be added later)
-    'create_campaign_tool': ('<a:wirdEdit:1474555079947325440>',   'Creating campaign',                     'Created campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
-    'send_campaign':        ('<a:wirdEdit:1474555079947325440>',   'Sending campaign',                      'Sent campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
-    'list_campaigns':       ('<a:wirdLookup:1474555016701415548>', 'Listing campaigns',                     'Listed campaigns', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'get_campaign_responses':('<a:wirdLookup:1474555016701415548>','Fetching campaign responses',            'Fetched campaign responses', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'add_campaign_button':  ('<a:wirdEdit:1474555079947325440>',   'Adding campaign button',                'Added campaign button', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    # Campaign
+    'create_campaign_tool': ('<a:wirdAnnounce:1474968852520632390>',   'Creating campaign',                     'Created campaign', '<:wirdAnnounce_ok:1474968858715754497>', '<:wirdAnnounce_err:1474968865027915958>'),
+    'send_campaign':        ('<a:wirdAnnounce:1474968852520632390>',   'Sending campaign',                      'Sent campaign', '<:wirdAnnounce_ok:1474968858715754497>', '<:wirdAnnounce_err:1474968865027915958>'),
+    'list_campaigns':       ('<a:wirdAnnounce:1474968852520632390>', 'Listing campaigns',                     'Listed campaigns', '<:wirdAnnounce_ok:1474968858715754497>', '<:wirdAnnounce_err:1474968865027915958>'),
+    'get_campaign_responses':('<a:wirdAnnounce:1474968852520632390>','Fetching campaign responses',            'Fetched campaign responses', '<:wirdAnnounce_ok:1474968858715754497>', '<:wirdAnnounce_err:1474968865027915958>'),
+    'add_campaign_button':  ('<a:wirdAnnounce:1474968852520632390>',   'Adding campaign button',                'Added campaign button', '<:wirdAnnounce_ok:1474968858715754497>', '<:wirdAnnounce_err:1474968865027915958>'),
     # CloudConvert
     'convert_file':         ('<a:wirdFolder:1474555135031115891>', 'Converting file',                       'Converted file', '<:wirdFolder_ok:1474555141586813090>', '<:wirdFolder_err:1474555148087857336>'),
     'check_cloudconvert_status': ('<a:wirdLookup:1474555016701415548>', 'Checking conversion status',       'Checked conversion status', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
