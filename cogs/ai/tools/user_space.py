@@ -728,10 +728,57 @@ def _format_size(size_bytes: int) -> str:
         size_bytes /= 1024
     return f"{size_bytes:.1f} TB"
 
+async def save_message_attachment_by_id(message_id: int, **kwargs) -> str:
+    """
+    Save all attachments from a specific message ID to the user's personal space.
+    
+    Use this when a user asks to save attachments from a previous message.
+    
+    Args:
+        message_id: The ID of the message containing the attachments
+    
+    Returns:
+        Success message listing saved files, or error
+    """
+    user_id = kwargs.get('user_id')
+    current_message = kwargs.get('message')
+    
+    if not user_id:
+        return "Error: Could not determine user ID"
+    
+    if not current_message:
+        return "Error: Could not access message context"
+        
+    try:
+        from nextcord import NotFound, Forbidden, HTTPException
+        try:
+            target_message = await current_message.channel.fetch_message(int(message_id))
+        except (NotFound, Forbidden, HTTPException, ValueError) as e:
+            return f"❌ Error fetching message: {e}"
+            
+        attachments = target_message.attachments
+        if not attachments:
+            return f"❌ No attachments found in message {message_id}."
+        
+        results = []
+        for att in attachments:
+            result = await upload_attachment_to_space(
+                attachment_url=att.url,
+                filename=att.filename,
+                user_id=user_id
+            )
+            results.append(f"• **{att.filename}**: {result}")
+        
+        return f"📁 **Saving {len(attachments)} file(s) from message {message_id}:**\n" + "\n".join(results)
+    except Exception as e:
+        logger.error(f"Failed to save attachments by id: {e}")
+        return f"❌ Error saving attachments: {e}"
+
 USER_SPACE_TOOLS = [
     save_to_space,
     upload_attachment_to_space,
     save_message_attachments,
+    save_message_attachment_by_id,
     read_from_space,
     extract_pdf_images,
     list_space,

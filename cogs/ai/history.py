@@ -57,12 +57,19 @@ async def build_chat_history(bot: discord.Client, message: discord.Message, cont
         role = "model" if msg.author.id == bot.user.id else "user"
         content = msg.content
         if msg.attachments:
-            content += f"\\n[System: Attachment: {msg.attachments[0].url}]"
+            for att in msg.attachments:
+                content += f"\n[System: Attachment: {att.url}]"
+
+        time_str = msg.created_at.strftime('%Y-%m-%d %H:%M:%S UTC')
+        prefix = f"[{time_str}] [Message ID: {msg.id}]"
+        
+        if msg.reference and msg.reference.message_id:
+            prefix += f" [Replying to ID: {msg.reference.message_id}]"
 
         if role == "user":
-            text = f"User {msg.author.display_name} ({msg.author.id}): {content}"
+            text = f"{prefix} User {msg.author.display_name} ({msg.author.id}): {content}"
         else:
-            text = content
+            text = f"{prefix} {content}"
             
         history.append(types.Content(role=role, parts=[types.Part(text=text)]))
         
