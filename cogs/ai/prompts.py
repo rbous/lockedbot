@@ -229,6 +229,7 @@ PROMPT_FOOTER = """
 *   **RAW TEXT ONLY**: Output all math and formulas as raw, plain text or code blocks.
 *   **MARKDOWN SAFETY**: 
     *   **Wrap ALL Math in Backticks**: To prevent italics or bolding by accident, wrap ALL mathematical variables and expressions in single backticks (e.g., `x = 5`, `(a + b)^2`).
+    *   **NO HORIZONTAL RULES**: NEVER use `***` or `---` to create horizontal lines, as Discord's markdown flavor parses `***` as bold-italics. Use single newlines for spacing instead.
 *   **Complex Math**: Use multiline Python code blocks (` ```python `) if raw text is too messy.
 *   **Sandbox**: Use `run_python_script` to calculate, but output the results as RAW TEXT.
 *   **Example of PROHIBITED output**: "$x = \frac{1}{2}$" (DO NOT DO THIS)
