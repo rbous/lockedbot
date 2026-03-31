@@ -261,58 +261,59 @@ async def get_db_schema(**kwargs):
 
 async def update_server_config(setting: str, value: str, **kwargs):
     """
-    Update a specific server configuration setting. (Admin Only).
-    
+    Update a specific tracker configuration setting. (Admin Only).
+
     Args:
         setting: The setting to change. Allowed values:
-                 - 'mushaf_type': (e.g. 'madani', 'tajweed', '13-line')
-                 - 'pages_per_day': (Number 1-20)
-                 - 'channel_id': (Channel ID)
-                 - 'mosque_id': (String ID)
-                 - 'followup_on_completion': ('true' or 'false')
-                 - 'wird_role_id': (Role ID)
+                 - 'channel_id': (Channel ID for check-in pings)
+                 - 'summary_channel_id': (Channel ID for daily summaries)
+                 - 'calendar_id': (Google Calendar ID)
+                 - 'timezone': (e.g. 'America/New_York')
+                 - 'ping_interval_minutes': (Number, e.g. 15)
+                 - 'summary_time': (HH:MM in 24h, e.g. '22:00')
+                 - 'enabled': ('true' or 'false')
         value: The new value to set.
     """
     guild_id = kwargs.get('guild_id')
     if not (kwargs.get('is_admin') or kwargs.get('is_owner')):
         return "❌ Error: Permission Denied."
-        
+
     if not guild_id:
         return "Error: Cannot update config without guild context."
 
     safe_map = {
-        'mushaf_type': 'mushaf_type',
-        'pages_per_day': 'pages_per_day',
         'channel_id': 'channel_id',
-        'mosque_id': 'mosque_id', 
-        'followup_on_completion': 'followup_on_completion',
-        'wird_role_id': 'wird_role_id'
+        'summary_channel_id': 'summary_channel_id',
+        'calendar_id': 'calendar_id',
+        'timezone': 'timezone',
+        'ping_interval_minutes': 'ping_interval_minutes',
+        'summary_time': 'summary_time',
+        'enabled': 'enabled',
     }
-    
+
     if setting not in safe_map:
         return f"Error: Setting '{setting}' is not allowed. Allowed: {', '.join(safe_map.keys())}"
-    
+
     db_key = safe_map[setting]
     final_value = value
-    
+
     try:
-        if setting == 'pages_per_day':
+        if setting == 'ping_interval_minutes':
             final_value = int(value)
-            if not (1 <= final_value <= 20):
-                raise ValueError("Pages must be between 1 and 20")
-        elif setting in ('channel_id', 'wird_role_id'):
+            if final_value < 1:
+                raise ValueError("Interval must be at least 1 minute")
+        elif setting in ('channel_id', 'summary_channel_id'):
             match = re.search(r'(\d+)', str(value))
             if match:
                 final_value = int(match.group(1))
             else:
                 raise ValueError("Invalid ID format")
-        elif setting == 'followup_on_completion':
+        elif setting == 'enabled':
             final_value = 1 if str(value).lower() in ['true', '1', 'yes'] else 0
-            
-        kwargs = {db_key: final_value}
-        await db.create_or_update_guild(guild_id, **kwargs)
+
+        await db.tracker.create_or_update_config(guild_id, **{db_key: final_value})
         return f"✅ Successfully updated `{setting}` to `{final_value}`."
-        
+
     except Exception as e:
         return f"Error updating config: {e}"
 ADMIN_TOOLS = [

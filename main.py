@@ -33,37 +33,6 @@ async def on_ready():
 
 @bot.event 
 async def on_interaction(interaction: discord.Interaction):
-    if interaction.type == discord.InteractionType.component:
-        custom_id = interaction.data.get('custom_id', '')
-        if custom_id.startswith('complete_'):
-            try:
-                page_number = int(custom_id.split('_')[1])
-                from utils.completion import handle_completion
-                await handle_completion(interaction, page_number)
-                return  # Handled
-            except (ValueError, IndexError):
-                logger.warning(f"Invalid completion button custom_id: {custom_id}")
-                return
-        elif custom_id.startswith('translate_'):
-            try:
-                page_number = int(custom_id.split('_')[1])
-                from utils.interaction_handlers import handle_translation
-                await handle_translation(interaction, page_number)
-                return  # Handled
-            except (ValueError, IndexError):
-                logger.warning(f"Invalid translation button custom_id: {custom_id}")
-                return
-        elif custom_id.startswith('tafsir_'):
-            parts = custom_id.split('_')
-            if len(parts) >= 2 and parts[1].isdigit():
-                try:
-                    page_number = int(parts[1])
-                    from utils.interaction_handlers import handle_tafsir
-                    await handle_tafsir(interaction, page_number)
-                    return  # Handled
-                except (ValueError, IndexError):
-                    logger.warning(f"Invalid tafsir button custom_id: {custom_id}")
-                    return
     try:
         await bot.process_application_commands(interaction)
     except Exception as e:
@@ -78,27 +47,43 @@ async def on_disconnect():
 @bot.event
 async def on_guild_join(guild: discord.Guild):
     logger.info(f"Joined new guild: {guild.name} ({guild.id})")
-    
+
     embed = discord.Embed(
-        title="📖 Welcome to Wird Bot!",
-        description="Thank you for adding me to your server! I help manage daily Quran reading (Wird) with tracking and streaks.",
-        color=discord.Color.green()
+        title="✅ Welcome to the Accountability Tracker!",
+        description=(
+            "Thanks for adding me to your server! "
+            "I send periodic check-ins to keep you on track with your Google Calendar."
+        ),
+        color=discord.Color.green(),
     )
-    
+
     embed.add_field(
         name="🚀 Quick Setup",
-        value="Run `/setup` to configure the bot with an interactive wizard.\n\n**Required Permission:** Manage Channels",
-        inline=False
+        value=(
+            "Run `/tracker setup` to configure the check-in channel, "
+            "your Google Calendar ID, and more.\n\n"
+            "**Required Permission:** Manage Channels"
+        ),
+        inline=False,
     )
-    
-    embed.set_footer(text="Run /setup to get started!")
+
+    embed.add_field(
+        name="📖 Google Calendar",
+        value=(
+            "You'll need a Google Service Account to pull calendar events. "
+            "See the README for a step-by-step guide."
+        ),
+        inline=False,
+    )
+
+    embed.set_footer(text="Run /tracker setup to get started!")
     target_channel = guild.system_channel
     if not target_channel:
         for channel in guild.text_channels:
             if channel.permissions_for(guild.me).send_messages:
                 target_channel = channel
                 break
-    
+
     if target_channel:
         try:
             await target_channel.send(embed=embed)
