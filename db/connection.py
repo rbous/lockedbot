@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseConnection:
-    def __init__(self, db_path: str = "wird.db"):
+    def __init__(self, db_path: str = "lockedbot.db"):
         self.db_path = db_path
         self.db: Optional[aiosqlite.Connection] = None
         self.migrations_dir = Path(__file__).parent.parent / "migrations"

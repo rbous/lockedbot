@@ -147,10 +147,9 @@ async def _execute_discord_code_internal(bot, code: str, ctx_data: dict) -> str:
         for pattern in dangerous_patterns:
             if re.search(pattern, code, re.IGNORECASE):
                 return f"❌ Security Error: Pattern `{pattern}` is not allowed for non-owners."
-        module_mutation_pattern = r'(utils|discord|nextcord|asyncio|page_sender|tafsir|translation|quran|db|bot)\.\w+\s*='
+        module_mutation_pattern = r'(utils|discord|nextcord|asyncio|db|bot)\.\w+\s*='
         if re.search(module_mutation_pattern, code):
             return "❌ Security Error: Cannot modify attributes of pre-loaded modules. This is a security violation."
-    import utils
     from database import db
     if is_owner:
         restricted_builtins = __builtins__
@@ -172,10 +171,6 @@ async def _execute_discord_code_internal(bot, code: str, ctx_data: dict) -> str:
         'discord': SecureProxy(discord),
         'nextcord': SecureProxy(discord),
         'asyncio': SecureProxy(asyncio),
-        'page_sender': SecureProxy(utils.page_sender),
-        'tafsir': SecureProxy(utils.tafsir), 
-        'translation': SecureProxy(utils.translation),
-        'quran': SecureProxy(utils.quran)
     }
     if is_owner:
         env['config'] = __import__('config')

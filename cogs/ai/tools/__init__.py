@@ -2,16 +2,18 @@
 AI Tools Package
 
 This package organizes all AI tools into categorical modules:
-- quran: Quran and Tafsir tools
 - admin: Database and codebase access tools
-- user: User-facing tools (stats, streak)
+- user: User-facing tools (accountability stats)
 - bot_management: Bot status management
 - discord_actions: Discord code execution with security
+- discord_info: Server/channel/member info
 - web: Web search and URL reading
 - user_space: Personal file storage and management
-
-Built-in Gemini capabilities are also configured here:
-- Code execution (sandboxed) - Disabled for Gemini 3 Preview
+- memory: Persistent user memories
+- sandbox: Python code sandbox
+- vision: Image analysis
+- cloudconvert: File conversion
+- campaign: Mass messaging
 """
 from .admin import (
     ADMIN_TOOLS,
@@ -50,17 +52,8 @@ from .discord_info import (
     get_server_info,
 )
 from .memory import MEMORY_TOOLS
-from .quran import (
-    QURAN_TOOLS,
-    get_ayah_safe,
-    get_page_safe,
-    lookup_quran_page,
-    lookup_tafsir,
-    search_quran_safe,
-    show_quran_page,
-)
 from .sandbox import SANDBOX_TOOLS
-from .user import USER_TOOLS, get_my_stats, set_my_streak_emoji
+from .user import USER_TOOLS, get_my_tracker_stats
 from .user_space import (
     USER_SPACE_TOOLS,
     delete_from_space,
@@ -79,12 +72,15 @@ from .user_space import (
 from .vision import VISION_TOOLS, analyze_image
 from .web import WEB_TOOLS, read_url, search_web
 
-CUSTOM_TOOLS = QURAN_TOOLS + ADMIN_TOOLS + USER_TOOLS + BOT_MANAGEMENT_TOOLS + DISCORD_TOOLS + DISCORD_INFO_TOOLS + WEB_TOOLS + VISION_TOOLS + MEMORY_TOOLS + SANDBOX_TOOLS + USER_SPACE_TOOLS + CLOUDCONVERT_TOOLS + CAMPAIGN_TOOLS
+CUSTOM_TOOLS = (
+    ADMIN_TOOLS + USER_TOOLS + BOT_MANAGEMENT_TOOLS + DISCORD_TOOLS +
+    DISCORD_INFO_TOOLS + WEB_TOOLS + VISION_TOOLS + MEMORY_TOOLS +
+    SANDBOX_TOOLS + USER_SPACE_TOOLS + CLOUDCONVERT_TOOLS + CAMPAIGN_TOOLS
+)
 
 __all__ = [
     'CUSTOM_TOOLS',
-    'QURAN_TOOLS',
-    'ADMIN_TOOLS', 
+    'ADMIN_TOOLS',
     'USER_TOOLS',
     'BOT_MANAGEMENT_TOOLS',
     'DISCORD_TOOLS',
@@ -96,19 +92,12 @@ __all__ = [
     'USER_SPACE_TOOLS',
     'CLOUDCONVERT_TOOLS',
     'CAMPAIGN_TOOLS',
-    'lookup_quran_page',
-    'lookup_tafsir',
-    'show_quran_page',
-    'get_ayah_safe',
-    'get_page_safe',
-    'search_quran_safe',
     'execute_sql',
     'search_codebase',
     'read_file',
     'get_db_schema',
     'update_server_config',
-    'get_my_stats',
-    'set_my_streak_emoji',
+    'get_my_tracker_stats',
     'force_bot_status',
     'add_bot_status_option',
     'execute_discord_code',

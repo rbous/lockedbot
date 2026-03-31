@@ -1,5 +1,7 @@
 nextcord
 google-genai
+google-auth
+google-api-python-client
 python-dotenv
 aiohttp
 aiofiles

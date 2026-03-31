@@ -11,13 +11,13 @@ class Status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.status_options = [
-            "Reading Wird",
-            "Learning Quran",
-            "Reviewing Tafsir",
-            "Memorizing Ayahs",
-            "Reflecting on Verses",
-            "Helping Users",
-            "Reciting Quran"
+            "Tracking your day 📅",
+            "Keeping you accountable ✅",
+            "Watching the calendar 🗓️",
+            "Helping you stay on track 🎯",
+            "Running accountability checks ⏰",
+            "Compiling daily summaries 📊",
+            "Ready for your check-in 👋",
         ]
         self.current_forced_status = None
         self._reset_task = None

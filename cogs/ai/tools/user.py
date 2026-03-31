@@ -1,64 +1,47 @@
 """
 User-facing tools for the AI cog.
-These are available to all users.
 """
 import logging
+from datetime import datetime, timezone
 
 from database import db
 
 logger = logging.getLogger(__name__)
 
 
-async def get_my_stats(**kwargs):
+async def get_my_tracker_stats(**kwargs):
     """
-    Get the caller's stats (streaks, etc).
-    """
-    message = kwargs.get('message')
-    user_id = message.author.id if message else kwargs.get('user_id')
-    guild_id = kwargs.get('guild_id')
-    
-    if not user_id or not guild_id:
-        return "Error: User context missing."
-
-    user_data = await db.get_user(user_id, guild_id)
-    if user_data:
-        if user_data.get('registered'):
-            streak = user_data.get('session_streak', 0)
-            longest = user_data.get('longest_session_streak', 0)
-            emoji = user_data.get('streak_emoji', '🔥')
-            return (
-                f"**Your Stats:**\n"
-                f"- Current Streak: {streak} {emoji}\n"
-                f"- Longest Streak: {longest}\n"
-                f"- Streak Emoji: {emoji}"
-            )
-        else:
-            return "You are not registered! Use /register to get started."
-    else:
-        return "User not found in the database."
-
-
-async def set_my_streak_emoji(emoji: str, **kwargs):
-    """
-    Update the caller's streak emoji.
-    
-    Args:
-        emoji: The new emoji to use for streak display.
+    Get the calling user's accountability tracker stats for today.
+    Returns a summary of their on-track / distracted / off-track responses.
     """
     message = kwargs.get('message')
     user_id = message.author.id if message else kwargs.get('user_id')
     guild_id = kwargs.get('guild_id')
-    
+
     if not user_id or not guild_id:
         return "Error: User context missing."
-    
-    user_data = await db.get_user(user_id, guild_id)
-    if user_data and user_data.get('registered'):
-        await db.set_user_streak_emoji(user_id, guild_id, emoji)
-        return f"✅ Updated your streak emoji to {emoji}"
-    else:
-        return "You are not registered. Use /register first."
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    responses = await db.tracker.get_responses_for_date(guild_id, today)
+    user_responses = [r for r in responses if r['user_id'] == user_id]
+
+    if not user_responses:
+        return f"No tracker responses recorded for you today ({today})."
+
+    on_track = sum(1 for r in user_responses if r['response_type'] == 'on_track')
+    slightly = sum(1 for r in user_responses if r['response_type'] == 'slightly_distracted')
+    off_track = sum(1 for r in user_responses if r['response_type'] == 'off_track')
+    total = len(user_responses)
+
+    return (
+        f"**Your Accountability Stats for {today}:**\n"
+        f"- ✅ On Track: {on_track}\n"
+        f"- 🟡 Slightly Distracted: {slightly}\n"
+        f"- ❌ Off Track: {off_track}\n"
+        f"- 📝 Total Responses: {total}"
+    )
+
+
 USER_TOOLS = [
-    get_my_stats,
-    set_my_streak_emoji,
+    get_my_tracker_stats,
 ]

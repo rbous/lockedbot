@@ -32,18 +32,11 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 _TOOL_LABELS = {
     # Web
-    'search_web':           ('<a:wirdWeb:1474972778275803288>',    'Searching web for **{query}**',            'Searched web for [{query}](<https://duckduckgo.com/?q={query_encoded}>)', '<:wirdWeb_ok:1474555004236071067>', '<:wirdWeb_err:1474555010535657619>'),   
+    'search_web':           ('<a:wirdWeb:1474972778275803288>',    'Searching web for **{query}**',            'Searched web for [{query}](<https://duckduckgo.com/?q={query_encoded}>)', '<:wirdWeb_ok:1474555004236071067>', '<:wirdWeb_err:1474555010535657619>'),
     'read_url':             ('<a:wirdWeb:1474972778275803288>',    'Reading `{url}`',                           'Read [{url_short}]({url})', '<:wirdWeb_ok:1474555004236071067>', '<:wirdWeb_err:1474555010535657619>'),
     'search_in_url':        ('<a:wirdWeb:1474972778275803288>',    'Searching `{url}` for **{search_term}**', 'Searched [{url_short}]({url}) for **{search_term}**', '<:wirdWeb_ok:1474555004236071067>', '<:wirdWeb_err:1474555010535657619>'),
     'extract_links':        ('<a:wirdWeb:1474972778275803288>',    'Extracting links from `{url}`',             'Extracted links from [{url_short}]({url})', '<:wirdWeb_ok:1474555004236071067>', '<:wirdWeb_err:1474555010535657619>'),
     'get_page_headings':    ('<a:wirdWeb:1474972778275803288>',    'Getting headings from `{url}`',             'Got headings from [{url_short}]({url})', '<:wirdWeb_ok:1474555004236071067>', '<:wirdWeb_err:1474555010535657619>'),
-    # Quran / Lookup
-    'lookup_quran_page':    ('<a:wirdLookup:1474972784529510550>', 'Looking up Quran page {page}',       'Looked up Quran page {page}', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'lookup_tafsir':        ('<a:wirdLookup:1474972784529510550>', 'Looking up tafsir for {ayah}',       'Looked up tafsir for {ayah}', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'show_quran_page':      ('<a:wirdLookup:1474972784529510550>', 'Fetching Quran page image',            'Fetched Quran page image', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'get_ayah_safe':        ('<a:wirdLookup:1474972784529510550>', 'Getting ayah {surah}:{ayah}',      'Got ayah {surah}:{ayah}', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'get_page_safe':        ('<a:wirdLookup:1474972784529510550>', 'Getting Quran page {page}',          'Got Quran page {page}', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'search_quran_safe':    ('<a:wirdLookup:1474972784529510550>', 'Searching Quran for **{query}**',    'Searched Quran for **{query}**', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     # Admin / DB
     'execute_sql':          ('<a:wirdDatabase:1474972810601304155>',     'Searching database',                   'Searched database', '<:wirdDatabase_ok:1474555104303644837>', '<:wirdDatabase_err:1474555110507020560>'),
     'get_db_schema':        ('<a:wirdDatabase:1474972810601304155>',     'Fetching database schema',             'Fetched database schema', '<:wirdDatabase_ok:1474555104303644837>', '<:wirdDatabase_err:1474555110507020560>'),
@@ -51,8 +44,7 @@ _TOOL_LABELS = {
     'read_file':            ('<a:wirdFolder:1474972823356313672>', 'Reading `{filename}`',               'Read `{filename}`', '<:wirdFolder_ok:1474555141586813090>', '<:wirdFolder_err:1474555148087857336>'),
     'update_server_config': ('<a:wirdEdit:1474973130178035833>',   'Updating `{setting}` → `{value}`', 'Updated `{setting}` → `{value}`', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     # User
-    'get_my_stats':         ('<a:wirdLookup:1474972784529510550>', 'Fetching your stats',                  'Fetched your stats', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
-    'set_my_streak_emoji':  ('<a:wirdEdit:1474973130178035833>',   'Setting streak emoji to {emoji}',    'Set streak emoji to {emoji}', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
+    'get_my_tracker_stats': ('<a:wirdLookup:1474972784529510550>', 'Fetching your tracker stats',          'Fetched your tracker stats', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     # Discord info
     'get_server_info':      ('<a:wirdLookup:1474972784529510550>', 'Fetching server info',                 'Fetched server info', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
     'get_member_info':      ('<a:wirdLookup:1474972784529510550>', 'Fetching member info',                 'Fetched member info', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),
@@ -78,7 +70,7 @@ _TOOL_LABELS = {
     # Bot management
     'force_bot_status':     ('<a:wirdEdit:1474973130178035833>',   'Setting bot status to **{status}**',  'Set bot status to **{status}**', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     'add_bot_status_option':('<a:wirdEdit:1474973130178035833>',   'Adding status option',                  'Added status option', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
-    # Campaign  (announce icons will be added later)
+    # Campaign
     'create_campaign_tool': ('<a:wirdEdit:1474973130178035833>',   'Creating campaign',                     'Created campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     'send_campaign':        ('<a:wirdEdit:1474973130178035833>',   'Sending campaign',                      'Sent campaign', '<:wirdEdit_ok:1474555085915816131>', '<:wirdEdit_err:1474555091934515381>'),
     'list_campaigns':       ('<a:wirdLookup:1474972784529510550>', 'Listing campaigns',                     'Listed campaigns', '<:wirdLookup_ok:1474555022984347863>', '<:wirdLookup_err:1474555029322072236>'),

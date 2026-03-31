@@ -13,7 +13,7 @@ async def force_bot_status(status_text: str, duration_minutes: int = 30, **kwarg
     Use this when you want to change what the bot is "doing" in Discord based on user request.
     
     Args:
-        status_text: The text to display (e.g., "Reading Quran", "Coding").
+        status_text: The text to display (e.g., "Tracking your goals", "Coding").
         duration_minutes: How long to keep this status before resuming rotation. Default 30.
     """
     bot = kwargs.get('bot')
