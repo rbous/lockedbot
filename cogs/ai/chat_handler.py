@@ -330,7 +330,7 @@ class ChatHandler:
                             'user_id': message.author.id,
                             'is_owner': await self.bot.is_owner(message.author),
                             'is_admin': message.author.guild_permissions.administrator if message.guild else False,
-                            'model_name': getattr(chat_session, 'model_name', 'gemini-3-flash-preview'),
+                            'model_name': getattr(chat_session, 'model_name', 'gemini-2.0-flash'),
                             'cog': self.cog,
                             'whitelisted_guild': message.guild.id in self.cog.execute_code_whitelist if message.guild else False
                         }
@@ -439,25 +439,10 @@ class ChatHandler:
                              sent_message = await message.reply(chunk)
                              self.cog.active_tasks[sent_message.id] = asyncio.current_task()
                     accumulated_text = ""
-                 if getattr(chat_session, 'is_pro_model', False):
-                     if sent_message:
-                         current_content = sent_message.content
-                         loading_pattern = r"-# <a:loading:\d+> Generating\.\.\."
-                         if re.search(loading_pattern, current_content):
-                             new_content = re.sub(loading_pattern, "-# 🧠 Thinking (Pro Model)...", current_content)
-                             sent_message = await sent_message.edit(content=new_content)
-                         elif "-# 🧠 Thinking (Pro Model)..." not in current_content:
-                             sent_message = await sent_message.edit(content=current_content + "\n-# 🧠 Thinking (Pro Model)...")
-                     else:
-                         sent_message = await message.reply("-# 🧠 Thinking (Pro Model)...")
                  next_response = await chat_session.send_message(tool_responses)
                  return await self.process_chat_response(chat_session, next_response, message, sent_message, tool_count=tool_count+1, execution_logs=execution_logs, allowed_tool_names=allowed_tool_names)
             
             if accumulated_text.strip():
-                if getattr(chat_session, 'is_pro_model', False):
-                    header = "**Using pro model 🧠**\n\n"
-                    if not accumulated_text.startswith(header):
-                        accumulated_text = header + accumulated_text
                 view = SandboxExecutionView(execution_logs) if execution_logs else None
 
                 if sent_message and len(sent_message.content) + len(accumulated_text) < 2000:

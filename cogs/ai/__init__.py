@@ -10,7 +10,7 @@ from nextcord.ext import commands
 from config import GEMINI_API_KEY
 
 from .prompts import get_system_prompt
-from .router import COMPLEX_MODEL, SIMPLE_MODEL, evaluate_complexity
+from .router import MODEL
 from .tools import ADMIN_TOOLS, BOT_MANAGEMENT_TOOLS, CUSTOM_TOOLS
 from .tools.memory import fetch_user_memory_context
 from .history import build_chat_history
@@ -80,7 +80,7 @@ class AICog(commands.Cog):
                         
                         try:
                             from .tools.vision import analyze_image
-                            description = await analyze_image(target_att.url, question="Describe this image in extreme detail for context.", model_name=SIMPLE_MODEL)
+                            description = await analyze_image(target_att.url, question="Describe this image in extreme detail for context.", model_name=MODEL)
                             image_analysis_text = f"\n[System: User uploaded an Image. Description: {description}]"
                         except Exception as e:
                             logger.error(f"Pre-routing image analysis failed: {e}")
@@ -92,26 +92,11 @@ class AICog(commands.Cog):
                             pass
                         self.active_tasks.pop(status_msg.id, None)
 
-                # 3. Model Complexity Routing
-                combined_context = message.content + image_analysis_text
-                msg_content_lower = message.content.lower()
-                
-                force_pro = any(kw in msg_content_lower for kw in ["use pro", "force pro", "pro model", "pro brain", "use 3 pro"])
-                force_flash = any(kw in msg_content_lower for kw in ["use flash", "force flash", "flash model", "fast model", "use 3 flash"])
-                
-                if force_pro:
-                    complexity = "COMPLEX"
-                elif force_flash:
-                    complexity = "SIMPLE"
-                elif len(message.content) < 100 and not image_analysis_text:
-                    complexity = "SIMPLE"
-                else:
-                    complexity = await evaluate_complexity(combined_context)
-                     
-                selected_model = COMPLEX_MODEL if complexity == "COMPLEX" else SIMPLE_MODEL
-                logger.info(f"Smart Routing: {complexity} -> {selected_model}")
-                
-                status_text = "-# 🧠 Thinking (Pro Model)..." if selected_model == COMPLEX_MODEL else "-# <a:loading:1466182602317889576> Generating..."
+                # 3. Select Model
+                selected_model = MODEL
+                logger.info(f"Using model: {selected_model}")
+
+                status_text = "-# <a:loading:1466182602317889576> Generating..."
                 sent_message = await message.reply(status_text)
                 self.active_tasks[sent_message.id] = current_task
                 tracked_msg_ids.append(sent_message.id)
@@ -160,8 +145,7 @@ class AICog(commands.Cog):
                         automatic_function_calling=dict(disable=True) 
                     )
                 )
-                chat.is_pro_model = (selected_model == COMPLEX_MODEL)
-                chat.model_name = selected_model
+                chat.model_name = MODEL
                 
                 guild_ctx_str = f", Guild ID: {message.guild.id}" if message.guild else ", Guild: None (DM)"
                 user_msg = (
